@@ -67,12 +67,15 @@ public class ChatClient {
           String type = console.nextLine();
           if (type.equals("1")) {
             // TODO: считываете с консоли логин, кому отправить
-
+            System.out.println("Введи сообщение");
             SendMessageRequest request = new SendMessageRequest();
             request.setMessage(console.nextLine());
             request.setRecipient("unknown"); // TODO указываем логин получателя
 
             String sendMsgRequest = objectMapper.writeValueAsString(request);
+//            System.out.println("-----");
+//            System.out.println(sendMsgRequest);
+//            System.out.println("-----");
             out.println(sendMsgRequest);
           } else if (type.equals("3")) {
             // TODO: Создаете запрос отправки "всем"
@@ -86,6 +89,16 @@ public class ChatClient {
 //                System.out.println("Список юзеров: " + s);
 //              }
 //            });
+
+          }else if (type.equals("2")){
+            BroadcastRequest request = new BroadcastRequest();
+            request.setMessage(console.nextLine());
+            String sendMsgRequest = objectMapper.writeValueAsString(request);
+//            System.out.println("-----");
+//            System.out.println(sendMsgRequest);
+//            System.out.println("-----");
+            out.println(sendMsgRequest);
+
 
           }
 

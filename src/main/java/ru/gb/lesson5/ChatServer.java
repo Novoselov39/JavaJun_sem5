@@ -133,8 +133,26 @@ public class ChatServer {
             continue;
           }
           clientTo.sendMessage(request.getMessage());
-        } else if (false) { // BroadcastRequest.TYPE.equals(type)
+        } else if (BroadcastRequest.TYPE.equals(type)) { // BroadcastRequest.TYPE.equals(type)
           // TODO: Читать остальные типы сообщений
+          final BroadcastRequest request;
+          try {
+            request = objectMapper.reader().readValue(msgFromClient, BroadcastRequest.class);
+          } catch (IOException e) {
+            System.err.println("Не удалось прочитать сообщение от клиента [" + clientLogin + "]: " + e.getMessage());
+            sendMessage("Не удалось прочитать сообщение SendMessageRequest: " + e.getMessage());
+            continue;
+          }
+
+
+          for (ClientHandler clientTo:clients.values()){
+            if (clientTo!=this) {
+              clientTo.sendMessage(request.getMessage());
+            }
+
+          }
+
+
         } else if (false) { // DisconnectRequest.TYPE.equals(type)
           break;
         } else {
